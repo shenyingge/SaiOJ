@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.sai.mapper.SubmissionMapper" >
+  <resultMap id="BaseResultMap" type="cn.sai.entity.Submission" >
+    <id column="sid" property="sid" jdbcType="INTEGER" />
+    <result column="lan" property="lan" jdbcType="VARCHAR" />
+    <result column="date_time" property="dateTime" jdbcType="TIMESTAMP" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="run_time" property="runTime" jdbcType="DOUBLE" />
+    <result column="is_visible" property="isVisible" jdbcType="BIT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.sai.entity.Submission" extends="BaseResultMap" >
+    <result column="code" property="code" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    sid, lan, date_time, uid, pid, status, run_time, is_visible
+  </sql>
+  <sql id="Blob_Column_List" >
+    code
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="cn.sai.entity.SubmissionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_submission
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.sai.entity.SubmissionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_submission
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_submission
+    where sid = #{sid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_submission
+    where sid = #{sid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.sai.entity.SubmissionExample" >
+    delete from t_submission
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.sai.entity.Submission" >
+    insert into t_submission (sid, lan, date_time, 
+      uid, pid, status, run_time, 
+      is_visible, code)
+    values (#{sid,jdbcType=INTEGER}, #{lan,jdbcType=VARCHAR}, #{dateTime,jdbcType=TIMESTAMP}, 
+      #{uid,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{runTime,jdbcType=DOUBLE}, 
+      #{isVisible,jdbcType=BIT}, #{code,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.sai.entity.Submission" >
+    insert into t_submission
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="lan != null" >
+        lan,
+      </if>
+      <if test="dateTime != null" >
+        date_time,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="runTime != null" >
+        run_time,
+      </if>
+      <if test="isVisible != null" >
+        is_visible,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="lan != null" >
+        #{lan,jdbcType=VARCHAR},
+      </if>
+      <if test="dateTime != null" >
+        #{dateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="runTime != null" >
+        #{runTime,jdbcType=DOUBLE},
+      </if>
+      <if test="isVisible != null" >
+        #{isVisible,jdbcType=BIT},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.sai.entity.SubmissionExample" resultType="java.lang.Integer" >
+    select count(*) from t_submission
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_submission
+    <set >
+      <if test="record.sid != null" >
+        sid = #{record.sid,jdbcType=INTEGER},
+      </if>
+      <if test="record.lan != null" >
+        lan = #{record.lan,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dateTime != null" >
+        date_time = #{record.dateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=INTEGER},
+      </if>
+      <if test="record.pid != null" >
+        pid = #{record.pid,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.runTime != null" >
+        run_time = #{record.runTime,jdbcType=DOUBLE},
+      </if>
+      <if test="record.isVisible != null" >
+        is_visible = #{record.isVisible,jdbcType=BIT},
+      </if>
+      <if test="record.code != null" >
+        code = #{record.code,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update t_submission
+    set sid = #{record.sid,jdbcType=INTEGER},
+      lan = #{record.lan,jdbcType=VARCHAR},
+      date_time = #{record.dateTime,jdbcType=TIMESTAMP},
+      uid = #{record.uid,jdbcType=INTEGER},
+      pid = #{record.pid,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      run_time = #{record.runTime,jdbcType=DOUBLE},
+      is_visible = #{record.isVisible,jdbcType=BIT},
+      code = #{record.code,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_submission
+    set sid = #{record.sid,jdbcType=INTEGER},
+      lan = #{record.lan,jdbcType=VARCHAR},
+      date_time = #{record.dateTime,jdbcType=TIMESTAMP},
+      uid = #{record.uid,jdbcType=INTEGER},
+      pid = #{record.pid,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      run_time = #{record.runTime,jdbcType=DOUBLE},
+      is_visible = #{record.isVisible,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.sai.entity.Submission" >
+    update t_submission
+    <set >
+      <if test="lan != null" >
+        lan = #{lan,jdbcType=VARCHAR},
+      </if>
+      <if test="dateTime != null" >
+        date_time = #{dateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="runTime != null" >
+        run_time = #{runTime,jdbcType=DOUBLE},
+      </if>
+      <if test="isVisible != null" >
+        is_visible = #{isVisible,jdbcType=BIT},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.sai.entity.Submission" >
+    update t_submission
+    set lan = #{lan,jdbcType=VARCHAR},
+      date_time = #{dateTime,jdbcType=TIMESTAMP},
+      uid = #{uid,jdbcType=INTEGER},
+      pid = #{pid,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      run_time = #{runTime,jdbcType=DOUBLE},
+      is_visible = #{isVisible,jdbcType=BIT},
+      code = #{code,jdbcType=LONGVARCHAR}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.sai.entity.Submission" >
+    update t_submission
+    set lan = #{lan,jdbcType=VARCHAR},
+      date_time = #{dateTime,jdbcType=TIMESTAMP},
+      uid = #{uid,jdbcType=INTEGER},
+      pid = #{pid,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      run_time = #{runTime,jdbcType=DOUBLE},
+      is_visible = #{isVisible,jdbcType=BIT}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+</mapper>

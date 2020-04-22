@@ -2,5 +2,64 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.sai.dao.IBloggerMapper">
+<mapper namespace="cn.sai.mapper.IUserDao">
+    <resultMap id="UserResultMap" type="cn.sai.entity.User">
+        <id column="uid" jdbcType="INTEGER" property="uid" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+        <result column="problem_ac_num" jdbcType="INTEGER" property="problem_ac_num" />
+        <result column="ac_rate" jdbcType="FLOAT" property="ac_rate" />
+    </resultMap>
+
+    <!-- 查询 -->
+    <select id="selectUserByUsername" parameterType="java.lang.String" resultType="cn.sai.entity.User">
+        select * from user
+        where user.username = #{param1}
+    </select>
+
+    <select id="selectUserByNickname" parameterType="String" resultType="cn.sai.entity.User">
+        select * from User
+        where user.nickname = #{nickname,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectUidByUsername" parameterType="String" resultType="Integer">
+        select uid from User
+        where user.username = #{username,jdbcType=VARCHAR}
+    </select>
+    <!-- 插入 -->
+
+    <!-- 保存用户 -->
+    <insert id="saveUser" parameterType="cn.sai.entity.User">
+        <!-- 配置插入数据后，获取插入数据的id -->
+        <selectKey keyProperty="uid" keyColumn="uid" resultType="int" order="AFTER">
+            select last_insert_id();
+        </selectKey>
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+
+            <if test="username != null">
+                username,
+            </if>
+            <if test="nickname != null">
+                nickname,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+
 </mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+      http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context.xsd
+      http://www.springframework.org/schema/mvc
+      http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+<!-- SpringMVC的配置，包含网站跳转的逻辑配置 -->
+    <context:component-scan base-package="cn.sai.controller"/>
+
+
+    <aop:config proxy-target-class="true"/>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+    <!-- 配置视图解析器，方便页面返回 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/pages/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- shiro为集成springMvc 拦截异常 -->
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props> <!-- 这里你可以根据需要定义N多个错误异常转发 -->
+                <prop key="org.apache.shiro.authz.UnauthorizedException">redirect:/failed</prop>
+                <prop key="org.apache.shiro.authz.UnauthenticatedException">redirect:/login.jsp</prop>
+                <!--<prop key="java.lang.IllegalArgumentException">redirect:/error.jsp</prop>
+                    参数错误(bizError.jsp) -->
+                <!--<prop key="java.lang.Exception">redirect:/error.jsp</prop> 其他错误为'未定义错误'(unknowError.jsp) -->
+            </props>
+        </property>
+    </bean>
+
+
+    <!-- 处理静态资源 -->
+    <mvc:resources mapping="/static/**" location="/static"/>
+
+    <!-- 两个标准配置 -->
+    <!-- 将SpringMVC不能处理的请求交给tomcat -->
+    <mvc:default-servlet-handler />
+    <!-- 开启MVC注解支持，能支持SpringMVC更高级的功能，JSR303校验，快捷的ajax。。。映射动态请求 -->
+    <mvc:annotation-driven/>
+</beans>
