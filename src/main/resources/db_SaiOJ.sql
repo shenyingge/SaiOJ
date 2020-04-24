@@ -47,13 +47,14 @@ CREATE TABLE `t_problem`(
 	`pid` INT(11) NOT NULL AUTO_INCREMENT COMMENT '题目id',
 	`title` VARCHAR(32) NOT NULL COMMENT '题目名',
 	`description` VARCHAR(500) NOT NULL COMMENT '题目描述',
-	`input` VARCHAR(500) NOT NULL COMMENT '题目标准输入',
-  	`output` VARCHAR(500) NOT NULL COMMENT '题目标准输出',
+	`input` VARCHAR(500) DEFAULT NULL COMMENT '题目标准输入',
+  	`output` VARCHAR(500) DEFAULT NULL COMMENT '题目标准输出',
 	`time_limit` INT(11) NOT NULL COMMENT '题目时间限制',
   	`memory_limit` INT(11) NOT NULL COMMENT '题目内存限制',
   	`submit_times` INT(11) DEFAULT 0 COMMENT '提交次数',
     `ac_rate` FLOAT DEFAULT 0 COMMENT '题目通过率',
-	PRIMARY KEY (`pid`)
+	PRIMARY KEY (`pid`),
+	UNIQUE KEY `title` (`title`)
 )ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 

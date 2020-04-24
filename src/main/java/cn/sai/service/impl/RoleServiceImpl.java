@@ -5,10 +5,12 @@ import cn.sai.entity.RoleExample;
 import cn.sai.entity.RoleExample.Criteria;
 import cn.sai.mapper.RoleMapper;
 import cn.sai.service.IRoleService;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
 
+@Service
 public class RoleServiceImpl implements IRoleService {
 
     @Resource

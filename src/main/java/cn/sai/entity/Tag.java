@@ -1,9 +1,26 @@
 package cn.sai.entity;
 
-public class Tag {
+import java.io.Serializable;
+
+public class Tag implements Serializable {
     private Integer tid;
 
     private String name;
+
+    public Tag() {
+    }
+
+    @Override
+    public String toString() {
+        return "Tag{" +
+                "tid=" + tid +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
+    public Tag(String name) {
+        this.name = name;
+    }
 
     public Integer getTid() {
         return tid;

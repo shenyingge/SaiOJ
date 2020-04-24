@@ -1,6 +1,8 @@
 package cn.sai.entity;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private Integer uid;
 
     private String username;
@@ -24,6 +26,20 @@ public class User {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "uid=" + uid +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", problemAcNum=" + problemAcNum +
+                ", acRate=" + acRate +
+                ", rank=" + rank +
+                ", u1='" + u1 + '\'' +
+                '}';
     }
 
     public Integer getUid() {

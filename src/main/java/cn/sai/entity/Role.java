@@ -1,9 +1,19 @@
 package cn.sai.entity;
 
-public class Role {
+import java.io.Serializable;
+
+public class Role implements Serializable {
     private Integer rid;
 
     private String roleName;
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "rid=" + rid +
+                ", roleName='" + roleName + '\'' +
+                '}';
+    }
 
     public Integer getRid() {
         return rid;

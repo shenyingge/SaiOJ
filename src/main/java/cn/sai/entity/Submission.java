@@ -1,8 +1,9 @@
 package cn.sai.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Submission {
+public class Submission implements Serializable {
     private Integer sid;
 
     private String lan;
@@ -20,6 +21,21 @@ public class Submission {
     private Boolean isVisible;
 
     private String code;
+
+    @Override
+    public String toString() {
+        return "Submission{" +
+                "sid=" + sid +
+                ", lan='" + lan + '\'' +
+                ", dateTime=" + dateTime +
+                ", uid=" + uid +
+                ", pid=" + pid +
+                ", status=" + status +
+                ", runTime=" + runTime +
+                ", isVisible=" + isVisible +
+                ", code='" + code + '\'' +
+                '}';
+    }
 
     public Integer getSid() {
         return sid;

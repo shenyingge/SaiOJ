@@ -1,6 +1,7 @@
 package cn.sai.mapper;
 
 import cn.sai.entity.Problem;
+import cn.sai.entity.ProblemDto;
 import cn.sai.entity.ProblemExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
@@ -27,4 +28,10 @@ public interface ProblemMapper {
     int updateByPrimaryKeySelective(Problem record);
 
     int updateByPrimaryKey(Problem record);
+
+    List<Problem> selectByTagId(Integer tid);
+
+    List<Problem> selectAll();
+
+    List<ProblemDto> selectDtoAll();
 }

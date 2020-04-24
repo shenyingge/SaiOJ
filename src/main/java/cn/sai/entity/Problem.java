@@ -1,6 +1,8 @@
 package cn.sai.entity;
 
-public class Problem {
+import java.io.Serializable;
+
+public class Problem implements Serializable {
     private Integer pid;
 
     private String title;
@@ -18,6 +20,21 @@ public class Problem {
     private Integer submitTimes;
 
     private Float acRate;
+
+    @Override
+    public String toString() {
+        return "Problem{" +
+                "pid=" + pid +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", input='" + input + '\'' +
+                ", output='" + output + '\'' +
+                ", timeLimit=" + timeLimit +
+                ", memoryLimit=" + memoryLimit +
+                ", submitTimes=" + submitTimes +
+                ", acRate=" + acRate +
+                '}';
+    }
 
     public Integer getPid() {
         return pid;

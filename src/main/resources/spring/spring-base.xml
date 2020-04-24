@@ -49,6 +49,14 @@
         <constructor-arg index="0" ref="sqlSessionFactory"/>
     </bean>
 
+    <!-- 配置一个可以批量执行的SqlSession -->
+    <bean id="sessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <!-- 类型设置成批量 -->
+        <constructor-arg name="executorType" value="BATCH"/>
+    </bean>
+
+
 
     <!-- 配置事务管理器 -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

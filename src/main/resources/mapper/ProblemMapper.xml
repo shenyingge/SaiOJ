@@ -12,6 +12,20 @@
     <result column="submit_times" property="submitTimes" jdbcType="INTEGER" />
     <result column="ac_rate" property="acRate" jdbcType="REAL" />
   </resultMap>
+
+  <resultMap id="WithExplanation" type="cn.sai.entity.ProblemDto">
+    <result column="pid" property="problem.pid" jdbcType="INTEGER" />
+    <result column="title" property="problem.title" jdbcType="VARCHAR" />
+    <result column="description" property="problem.description" jdbcType="VARCHAR" />
+    <result column="input" property="problem.input" jdbcType="VARCHAR" />
+    <result column="output" property="problem.output" jdbcType="VARCHAR" />
+    <result column="time_limit" property="problem.timeLimit" jdbcType="INTEGER" />
+    <result column="memory_limit" property="problem.memoryLimit" jdbcType="INTEGER" />
+    <result column="submit_times" property="problem.submitTimes" jdbcType="INTEGER" />
+    <result column="ac_rate" property="problem.acRate" jdbcType="REAL" />
+    <collection property="explanations" column="pid" select="cn.sai.mapper.ExplanationMapper.selectByPid"/>
+  </resultMap>
+
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -73,6 +87,12 @@
   <sql id="Base_Column_List" >
     pid, title, description, input, output, time_limit, memory_limit, submit_times, ac_rate
   </sql>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select * from t_problem
+  </select>
+  <select id="selectDtoAll" resultMap="WithExplanation">
+    select * from t_problem
+  </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.sai.entity.ProblemExample" >
     select
     <if test="distinct" >
@@ -272,4 +292,12 @@
       ac_rate = #{acRate,jdbcType=REAL}
     where pid = #{pid,jdbcType=INTEGER}
   </update>
+
+  <!-- 联合标签查询 -->
+  <select id="selectByTagId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select * from t_problem p left join t_problem_tag t on p.pid = t.tid
+    where rid = #{tid,jdbcType=INTEGER}
+  </select>
+
+
 </mapper>

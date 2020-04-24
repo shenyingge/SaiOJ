@@ -22,6 +22,8 @@ public interface ExplanationMapper {
 
     Explanation selectByPrimaryKey(Integer eid);
 
+    Explanation selectByPid(Integer pid);
+
     int updateByExampleSelective(@Param("record") Explanation record, @Param("example") ExplanationExample example);
 
     int updateByExampleWithBLOBs(@Param("record") Explanation record, @Param("example") ExplanationExample example);

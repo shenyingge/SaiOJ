@@ -34,7 +34,7 @@ public class UserServiceImpl implements IUserService {
             Criteria criteria = example.createCriteria();
             criteria.andUsernameEqualTo(username);
             List<User> list = userMapper.selectByExample(example);
-            return list.size() == 1 ? list.get(0) : null;
+            return list.size() > 0 ? list.get(0) : null;
         }
         return null;
     }
@@ -44,7 +44,7 @@ public class UserServiceImpl implements IUserService {
             Criteria criteria = example.createCriteria();
             criteria.andNicknameEqualTo(nickname);
             List<User> list = userMapper.selectByExample(example);
-            return list.size() == 1 ? list.get(0) : null;
+            return list.size() > 0 ? list.get(0) : null;
         }
         return null;
     }

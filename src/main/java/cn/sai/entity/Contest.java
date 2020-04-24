@@ -1,8 +1,9 @@
 package cn.sai.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Contest {
+public class Contest implements Serializable {
     private Integer cid;
 
     private String name;
@@ -14,6 +15,18 @@ public class Contest {
     private Date endTime;
 
     private Integer userCount;
+
+    @Override
+    public String toString() {
+        return "Contest{" +
+                "cid=" + cid +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", userCount=" + userCount +
+                '}';
+    }
 
     public Integer getCid() {
         return cid;

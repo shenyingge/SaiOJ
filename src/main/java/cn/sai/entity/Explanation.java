@@ -1,6 +1,8 @@
 package cn.sai.entity;
 
-public class Explanation {
+import java.io.Serializable;
+
+public class Explanation implements Serializable {
     private Integer eid;
 
     private Integer uid;
@@ -8,6 +10,16 @@ public class Explanation {
     private Integer pid;
 
     private String content;
+
+    @Override
+    public String toString() {
+        return "Explanation{" +
+                "eid=" + eid +
+                ", uid=" + uid +
+                ", pid=" + pid +
+                ", content='" + content + '\'' +
+                '}';
+    }
 
     public Integer getEid() {
         return eid;
