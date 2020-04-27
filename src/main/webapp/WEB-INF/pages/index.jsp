@@ -31,7 +31,7 @@
         align-items: center;
     }
 </style>
-
+<jsp:include page="header.jsp"/>
 <!-- 搭建显示页面 -->
 <div class="container">
     <!-- 标题 -->
@@ -41,12 +41,12 @@
         </div>
     </div>
     <!-- 按钮 -->
-    <div class="row">
-        <div class="col-md-4 col-md-offset-8">
-            <button class="btn btn-primary" id="emp_add_modal_btn">新增</button>
-            <button class="btn btn-danger" id="emp_delete_all_btn">删除</button>
-        </div>
-    </div>
+<%--    <div class="row">--%>
+<%--        <div class="col-lg-2 col-lg-offset-10">--%>
+<%--            <button class="btn btn-primary" id="emp_add_modal_btn">新增</button>--%>
+<%--            <button class="btn btn-danger" id="emp_delete_all_btn">删除</button>--%>
+<%--        </div>--%>
+<%--    </div>--%>
     <!-- 表格 -->
     <div class="row">
         <div class="col-md-12">
@@ -68,13 +68,13 @@
     <!-- 分页信息 -->
     <div class="row navbar-fixed-bottom" >
         <!-- 文字分页信息  -->
-        <div id="page_info_area" class="col-md-6 col-md-offset-1">
+        <div id="page_info_area" class="col-lg-4 col-lg-offset-1">
         </div>
-
         <!-- 分页条信息 -->
-        <div id="page_nav_area" class="col-md-5">
+        <div id="page_nav_area" class="col-lg-3 col-lg-offset-4">
         </div>
     </div>
+
 </div>
 
 <script type="text/javascript">
@@ -110,39 +110,14 @@
         //清空表格
         $("#problems_table tbody").empty();
 
+
+
         var problems = result.extend.pageInfo.list;
         $.each(problems,function (index,item) {
             var pidTd = $("<td width='15%' style='text-align: center;'></td>").append(item.problem.pid);
-            var titleTd = $("<td width='35%' style='text-align: center;'></td>").append(item.problem.title);
+            var titleTd = $("<td width='35%' style='text-align: center;'></td>").append('<a href="problem.do?pid='+item.problem.pid+'">'+item.problem.title+'</a>');
             var explanationCountTd = $("<td width='25%' style='text-align: center;'></td>").append(item.explanations.length);
             var acRateTd = $("<td width='25%' style='text-align: center;'></td>").append(item.problem.acRate);
-            /*<button class="btn btn-primary btn-sm">
-                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                 编辑
-              </button>
-              <button class="btn btn-danger btn-sm">
-                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                 删除
-              </button>
-            * */
-            // var editBtn = $("<button></button>")
-            //     .addClass("btn btn-primary btn-sm edit_btn")
-            //     .append($("<span></span>").addClass("glyphicon glyphicon-pencil")).append("编辑");
-            //
-            // editBtn.attr("edit-id",item.empId);
-            //
-            // var delBtn = $("<button></button>")
-            //     .addClass("btn btn-danger btn-sm delete_btn")
-            //     .append($("<span></span>").addClass("glyphicon glyphicon-trash")).append("删除");
-
-            /*                $(".edit_btn").click(function () {
-                                $("#empUpdateModal form")[0].reset();
-                                $("#empUpdateModal").modal({
-                                    backdrop:false
-                                });
-                            });*/
-
-            // var btnTd = $("<td></td>").append(editBtn).append(" ").append(delBtn);
 
             $("<tr></tr>")
                 .append(pidTd)
@@ -208,47 +183,6 @@
         //$("#page_nav_area").append(navEle);
         navEle.appendTo("#page_nav_area");
     }
-
-    //点击新增按钮弹出模态框
-    // $("#emp_add_modal_btn").click(function () {
-    //
-    //     //清除数据
-    //     $("#empAddModal form")[0].reset();
-    //
-    //     //设置默认性别
-    //     $("#gender1_add_input").attr("checked",true);
-    //
-    //     //发出ajax请求，查出部门信息，显示
-    //     getDepts("#dept_add_select");
-    //     //弹出模态框
-    //     $("#empName_add_input").parent().removeClass("has-success has-error");
-    //     $("#email_add_input").parent().removeClass("has-success has-error");
-    //     $("#empName_add_input").next().text("");
-    //     $("#email_add_input").next().text("");
-    //     $("#empAddModal").modal({
-    //         backdrop:false
-    //     });
-    // });
-
-    //查出部门信息
-/*    function getDepts(ele) {
-        // //清空值
-        // $(ele).empty();
-        $.ajax({
-            url:"${APP_PATH}/depts",
-            type:"GET",
-            success:function (result) {
-                console.log(result);
-                $(ele).empty();
-                var depts = result.extend.depts;
-                $.each(depts,function (index,item) {
-                    var depOption = $("<option></option>").append(item.deptName).prop("value",item.deptId);
-                    depOption.appendTo(ele);
-                });
-            }
-        });
-    }
-*/
 
 </script>
 </body>

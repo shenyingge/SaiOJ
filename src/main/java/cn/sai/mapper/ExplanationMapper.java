@@ -22,7 +22,7 @@ public interface ExplanationMapper {
 
     Explanation selectByPrimaryKey(Integer eid);
 
-    Explanation selectByPid(Integer pid);
+    List<Explanation> selectByPid(Integer pid);
 
     int updateByExampleSelective(@Param("record") Explanation record, @Param("example") ExplanationExample example);
 

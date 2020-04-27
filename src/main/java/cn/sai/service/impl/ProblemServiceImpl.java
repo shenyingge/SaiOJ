@@ -14,7 +14,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Service
-public class ProblemService implements IProblemService {
+public class ProblemServiceImpl implements IProblemService {
 
     @Resource
     ProblemMapper problemMapper;
