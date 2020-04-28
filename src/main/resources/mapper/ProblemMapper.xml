@@ -295,7 +295,7 @@
 
   <!-- 联合标签查询 -->
   <select id="selectByTagId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-    select * from t_problem p left join t_problem_tag t on p.pid = t.tid
+    select * from t_problem p left join t_problem_tag t on p.pid = t.pid
     where rid = #{tid,jdbcType=INTEGER}
   </select>
 

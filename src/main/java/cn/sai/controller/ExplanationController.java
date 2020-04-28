@@ -6,6 +6,7 @@ import cn.sai.entity.Msg;
 import cn.sai.service.IExplanationService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,12 +28,13 @@ public class ExplanationController {
     Msg getExplanations(@RequestParam(value = "pn",defaultValue = "1")Integer pn,
                         @RequestParam(value = "pid")Integer pid,
                         Model model){
-        PageHelper.startPage(pn,5);
+        PageHelper.startPage(pn,10);
         List<ExplanationDto> explanationDtos = explanationService.selectExplanationDtosByPid(pid);
         PageInfo page = new PageInfo(explanationDtos,5);  //navigatePages：显示的页数
         return Msg.success().add("pageInfo",page);
     }
 
+    @RequiresRoles("普通用户")
     @RequestMapping("/explanation.do")
     String showExplanations(@RequestParam Integer eid, Model model){
        Explanation explanation = explanationService.selectExplanationByEid(eid);

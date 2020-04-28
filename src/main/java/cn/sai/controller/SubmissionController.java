@@ -7,6 +7,7 @@ import cn.sai.service.impl.SubmissionServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +35,7 @@ public class SubmissionController {
     }
 
     @ResponseBody
+    @RequiresRoles("普通用户")
     @RequestMapping(value = "/submission",method = RequestMethod.POST)
     public Msg pushSubmission(@RequestParam(value = "lan")String lan,
                               @RequestParam(value = "uid")Integer uid,
@@ -47,6 +49,7 @@ public class SubmissionController {
         return Msg.success().add("sid",submission.getSid());
     }
 
+    @RequiresRoles("普通用户")
     @RequestMapping("/submission.do")
     public String getSubmission(@RequestParam(value = "sid")Integer sid, Model model){
         SubmissionDto submissionDto = submissionService.selectDtoBySid(sid);

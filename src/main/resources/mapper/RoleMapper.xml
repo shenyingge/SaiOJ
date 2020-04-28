@@ -161,4 +161,10 @@
     set role_name = #{roleName,jdbcType=VARCHAR}
     where rid = #{rid,jdbcType=INTEGER}
   </update>
+
+  <!-- 联合查询 -->
+  <!-- 用户id查询角色 -->
+  <select id="selectRolesByUid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select * from t_role r left join t_user_role u on r.rid = u.rid where u.uid = #{uid,javaType=Integer}
+  </select>
 </mapper>

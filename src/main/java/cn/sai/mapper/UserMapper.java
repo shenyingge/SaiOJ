@@ -1,5 +1,6 @@
 package cn.sai.mapper;
 
+import cn.sai.entity.Role;
 import cn.sai.entity.User;
 import cn.sai.entity.UserExample;
 import java.util.List;
@@ -28,4 +29,5 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
 }

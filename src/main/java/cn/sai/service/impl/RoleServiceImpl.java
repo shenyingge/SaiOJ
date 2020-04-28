@@ -17,8 +17,8 @@ public class RoleServiceImpl implements IRoleService {
     RoleMapper roleMapper;
 
     @Override
-    public Role selectRoleBySid(Integer sid) {
-        return roleMapper.selectByPrimaryKey(sid);
+    public Role selectRoleByRid(Integer rid) {
+        return roleMapper.selectByPrimaryKey(rid);
     }
 
     @Override
@@ -31,5 +31,10 @@ public class RoleServiceImpl implements IRoleService {
             return list.size() == 1 ? list.get(0) : null;
         }
         return null;
+    }
+
+    @Override
+    public List<Role> selectRolesByUid(Integer uid) {
+        return roleMapper.selectRolesByUid(uid);
     }
 }

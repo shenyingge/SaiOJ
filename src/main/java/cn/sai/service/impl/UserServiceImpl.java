@@ -1,10 +1,12 @@
 package cn.sai.service.impl;
 
 import cn.sai.Utils.EncryptionUtils;
+import cn.sai.entity.Role;
 import cn.sai.entity.User;
 import cn.sai.entity.UserExample;
 import cn.sai.entity.UserExample.Criteria;
 import cn.sai.mapper.UserMapper;
+import cn.sai.service.IRoleService;
 import cn.sai.service.IUserService;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,9 @@ public class UserServiceImpl implements IUserService {
 
     @Resource
     private UserMapper userMapper;
+
+    @Resource
+    private IRoleService roleService;
 
     public int saveUser(User user){
         String password = EncryptionUtils.encrypt(user);
@@ -60,6 +65,11 @@ public class UserServiceImpl implements IUserService {
     public void deleteUserByUsername(String username){
         int uid = this.selectUidByUsername(username);
         this.deleteUserByUid(uid);
+    }
+
+    @Override
+    public List<Role> queryRoleByUserId(Integer uid) {
+        return roleService.selectRolesByUid(uid);
     }
 
 }
