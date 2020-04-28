@@ -1,25 +1,19 @@
-<%@ page import="cn.sai.entity.Problem" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: shen
-  Date: 2020/4/27
-  Time: 14:44
+  Date: 2020/4/28
+  Time: 13:38
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>题解列表</title>
+    <title>submissions</title>
     <%
         pageContext.setAttribute("APP_PATH",request.getContextPath());
-        Problem problem = (Problem) session.getAttribute("problem");
-        pageContext.setAttribute("Problem",problem);
     %>
-    <!-- 引入Jquery -->
+    <!--导入js库-->
     <script type="text/javascript" src="${APP_PATH}/static/js/jquery-3.3.1.min.js"></script>
-    <!-- 引入Bootstrap样式 -->
     <link href="${APP_PATH}/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="${APP_PATH}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 </head>
@@ -35,20 +29,23 @@
 <div class="container">
     <!-- 标题 -->
     <div class="row">
-        <div class="col-md-12">
-            <h1>${Problem.title}</h1>
+        <div class="col-md-12 text-center">
+            <h1>提交列表</h1>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <table id="explanations_table" class="table table-hover">
+            <table id="submissions_table" class="table table-hover">
                 <thead>
                 <tr>
-                    <th width="60%" style="text-align: center;">题解</th>
-                    <th width="40%" style="text-align: center;">作者</th>
+                    <th width="20%" style="text-align: center;">时间</th>
+                    <th width="20%" style="text-align: center;">序号</th>
+                    <th width="20%" style="text-align: center;">题目</th>
+                    <th width="20%" style="text-align: center;">状态</th>
+                    <th width="20%" style="text-align: center;">作者</th>
                 </tr>
                 </thead>
-                <tbody id="explanations_body">
+                <tbody id="submissions_body">
 
                 </tbody>
             </table>
@@ -64,7 +61,6 @@
         </div>
     </div>
 </div>
-
 <script type="text/javascript">
 
     var totalRecord, currentPage;
@@ -76,15 +72,14 @@
 
     //点击页码跳转
     function to_page(pn) {
-        let pid = '<%=((Problem) session.getAttribute("problem")).getPid()%>'
         $.ajax({
-            url:"${APP_PATH}/explanations.do",
-            data:"pn="+pn+"&pid="+pid,
+            url:"${APP_PATH}/submissions.do",
+            data:"pn="+pn,
             type:"GET",
             success:function (result) {
                 //console.log(result);
                 //1、解析并显示题解数据
-                build_explanation_table(result);
+                build_submission_table(result);
                 //2、解析并显示分页数据
                 build_page_info(result);
                 //3、解析并显示分页条
@@ -94,20 +89,34 @@
     }
 
     //显示表格数据
-    function build_explanation_table(result) {
-
+    function build_submission_table(result) {
         //清空表格
-        $("#explanations_table tbody").empty();
-        let explanations = result.extend.pageInfo.list;
-        let title = '<%=((Problem) session.getAttribute("problem")).getTitle()%>';
-        $.each(explanations,function (index,item) {
-            var titleTd = $("<td width='60%' style='text-align: center;'></td>").append('<a href="explanation.do?eid='+item.explanation.eid+'">'+title+'</a>');
-            var userTd = $("<td width='40%' style='text-align: center;'></td>").append(item.user.nickname);
+        $("#submissions_table tbody").empty();
 
+        let submissionsDto = result.extend.pageInfo.list;
+        $.each(submissionsDto,function (index,item) {
+            let time = item.submission.dateTime;
+            let sid = item.submission.sid;
+            let pid = item.problem.pid;
+            let status = item.submission.status;
+            let statusName;
+            switch (status) {
+                case 0:statusName = "等待测评";break;
+                case 1:statusName = "通过";break;
+                default:statusName = "错误";break;
+            }
+            let timeTd = $("<td width='20%' style='text-align: center;'></td>").append(time);
+            let sidTd =  $("<td width='20%' style='text-align: center;'></td>").append('<a href="submission.do?sid='+sid+'">'+sid+'</a>');
+            let pidTd =  $("<td width='20%' style='text-align: center;'></td>").append('<a href="problem.do?pid='+pid+'">'+pid+'</a>');
+            let statusTd=$("<td width='20%' style='text-align: center;'></td>").append(statusName);
+            let userTd = $("<td width='20%' style='text-align: center;'></td>").append(item.user.nickname);
             $("<tr></tr>")
-                .append(titleTd)
+                .append(timeTd)
+                .append(sidTd)
+                .append(pidTd)
+                .append(statusTd)
                 .append(userTd)
-                .appendTo("#explanations_table tbody");
+                .appendTo("#submissions_table tbody");
         });
     }
 

@@ -9,6 +9,14 @@
   <resultMap id="ResultMapWithBLOBs" type="cn.sai.entity.Explanation" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
+  <resultMap id="ResultMapWithUser" type="cn.sai.entity.ExplanationDto">
+    <id column="eid" property="explanation.eid" jdbcType="INTEGER" />
+    <result column="uid" property="explanation.uid" jdbcType="INTEGER" />
+    <result column="pid" property="explanation.pid" jdbcType="INTEGER" />
+    <result column="content" property="explanation.content" jdbcType="LONGVARCHAR" />
+    <association property="user" column="uid" select="cn.sai.mapper.UserMapper.selectByPrimaryKey"/>
+  </resultMap>
+
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -120,6 +128,16 @@
     from t_explanation
     where pid = #{pid,jdbcType=INTEGER}
   </select>
+  <!-- 根据题目id查找题解及用户 -->
+  <select id="selectExplanationDtosByPid" resultMap="ResultMapWithUser" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_explanation
+    where pid = #{pid,jdbcType=INTEGER}
+  </select>
+
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_explanation

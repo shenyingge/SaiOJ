@@ -1,6 +1,7 @@
 package cn.sai.mapper;
 
 import cn.sai.entity.Submission;
+import cn.sai.entity.SubmissionDto;
 import cn.sai.entity.SubmissionExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
@@ -33,4 +34,8 @@ public interface SubmissionMapper {
     int updateByPrimaryKeyWithBLOBs(Submission record);
 
     int updateByPrimaryKey(Submission record);
+
+    List<SubmissionDto> selectAllWithUser();
+
+    SubmissionDto selectDtoBySid(Integer sid);
 }

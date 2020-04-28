@@ -1,13 +1,17 @@
 package cn.sai.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
 public class Submission implements Serializable {
+
     private Integer sid;
 
     private String lan;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date dateTime;
 
     private Integer uid;
@@ -35,6 +39,18 @@ public class Submission implements Serializable {
                 ", isVisible=" + isVisible +
                 ", code='" + code + '\'' +
                 '}';
+    }
+
+    public Submission() {
+    }
+
+    public Submission(String lan, Integer uid, Integer pid, Integer status, Boolean isVisible, String code) {
+        this.lan = lan;
+        this.uid = uid;
+        this.pid = pid;
+        this.status = status;
+        this.isVisible = isVisible;
+        this.code = code;
     }
 
     public Integer getSid() {

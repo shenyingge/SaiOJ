@@ -3,6 +3,7 @@ package cn.sai.entity;
 import java.io.Serializable;
 
 public class Explanation implements Serializable {
+
     private Integer eid;
 
     private Integer uid;

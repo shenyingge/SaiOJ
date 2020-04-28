@@ -14,6 +14,21 @@
   <resultMap id="ResultMapWithBLOBs" type="cn.sai.entity.Submission" extends="BaseResultMap" >
     <result column="code" property="code" jdbcType="LONGVARCHAR" />
   </resultMap>
+
+  <resultMap id="ResultMapWithUser" type="cn.sai.entity.SubmissionDto">
+    <id column="sid" property="submission.sid" jdbcType="INTEGER" />
+    <result column="lan" property="submission.lan" jdbcType="VARCHAR" />
+    <result column="date_time" property="submission.dateTime" jdbcType="TIMESTAMP" />
+    <result column="uid" property="submission.uid" jdbcType="INTEGER" />
+    <result column="pid" property="submission.pid" jdbcType="INTEGER" />
+    <result column="status" property="submission.status" jdbcType="INTEGER" />
+    <result column="run_time" property="submission.runTime" jdbcType="DOUBLE" />
+    <result column="is_visible" property="submission.isVisible" jdbcType="BIT" />
+    <result column="code" property="submission.code" jdbcType="LONGVARCHAR" />
+    <association property="user" column="uid" select="cn.sai.mapper.UserMapper.selectByPrimaryKey"/>
+    <association property="problem" column="pid" select="cn.sai.mapper.ProblemMapper.selectByPrimaryKey"/>
+  </resultMap>
+
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -78,6 +93,11 @@
   <sql id="Blob_Column_List" >
     code
   </sql>
+
+  <!-- 查找全部submission带用户 -->
+  <select id="selectAllWithUser" resultMap="ResultMapWithUser">
+    select * from t_submission
+  </select>
   <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="cn.sai.entity.SubmissionExample" >
     select
     <if test="distinct" >
@@ -116,6 +136,9 @@
     from t_submission
     where sid = #{sid,jdbcType=INTEGER}
   </select>
+  <select id="selectDtoBySid" resultMap="ResultMapWithUser">
+    select * from t_submission where sid = #{sid,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_submission
     where sid = #{sid,jdbcType=INTEGER}
@@ -134,7 +157,7 @@
       #{uid,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{runTime,jdbcType=DOUBLE}, 
       #{isVisible,jdbcType=BIT}, #{code,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="cn.sai.entity.Submission" >
+  <insert id="insertSelective" parameterType="cn.sai.entity.Submission" useGeneratedKeys="true" keyProperty="sid" >
     insert into t_submission
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="sid != null" >

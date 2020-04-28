@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro" %>
 <html>
 <head>
     <title>index</title>
@@ -16,12 +17,10 @@
     %>
     <!-- 引入Jquery -->
     <script type="text/javascript" src="${APP_PATH}/static/js/jquery-3.3.1.min.js"></script>
-
     <!-- 引入Bootstrap样式 -->
     <link href="${APP_PATH}/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="${APP_PATH}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 </head>
-
 
 <body>
 
@@ -40,13 +39,6 @@
             <h1>SaiOJ</h1>
         </div>
     </div>
-    <!-- 按钮 -->
-<%--    <div class="row">--%>
-<%--        <div class="col-lg-2 col-lg-offset-10">--%>
-<%--            <button class="btn btn-primary" id="emp_add_modal_btn">新增</button>--%>
-<%--            <button class="btn btn-danger" id="emp_delete_all_btn">删除</button>--%>
-<%--        </div>--%>
-<%--    </div>--%>
     <!-- 表格 -->
     <div class="row">
         <div class="col-md-12">
@@ -74,7 +66,6 @@
         <div id="page_nav_area" class="col-lg-3 col-lg-offset-4">
         </div>
     </div>
-
 </div>
 
 <script type="text/javascript">
@@ -109,8 +100,6 @@
 
         //清空表格
         $("#problems_table tbody").empty();
-
-
 
         var problems = result.extend.pageInfo.list;
         $.each(problems,function (index,item) {
