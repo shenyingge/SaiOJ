@@ -12,4 +12,6 @@ public interface IExplanationService {
     List<ExplanationDto> selectExplanationDtosByPid(Integer pid);
 
     Explanation selectExplanationByEid(Integer eid);
+
+    Integer saveExplanation(Explanation explanation);
 }

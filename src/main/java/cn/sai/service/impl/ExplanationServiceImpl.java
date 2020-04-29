@@ -30,4 +30,11 @@ public class ExplanationServiceImpl implements IExplanationService {
     public Explanation selectExplanationByEid(Integer eid) {
         return explanationMapper.selectByPrimaryKey(eid);
     }
+
+    @Override
+    public Integer saveExplanation(Explanation explanation) {
+        explanationMapper.insertSelective(explanation);
+        return explanation.getEid();
+    }
+
 }

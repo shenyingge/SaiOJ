@@ -1,5 +1,6 @@
 package cn.sai.test;
 
+import cn.sai.entity.Explanation;
 import cn.sai.entity.ExplanationDto;
 import cn.sai.service.IExplanationService;
 import org.junit.Test;
@@ -23,5 +24,11 @@ public class ExplanationTest {
         for (ExplanationDto dto:explanationDtos){
             System.out.println(dto);
         }
+    }
+
+    @Test
+    public void saveExplanationTest(){
+        int n = explanationService.saveExplanation(new Explanation(1,1,"code"));
+        System.out.println(n);
     }
 }

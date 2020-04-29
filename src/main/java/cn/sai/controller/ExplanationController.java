@@ -3,13 +3,17 @@ package cn.sai.controller;
 import cn.sai.entity.Explanation;
 import cn.sai.entity.ExplanationDto;
 import cn.sai.entity.Msg;
+import cn.sai.entity.Problem;
 import cn.sai.service.IExplanationService;
+import cn.sai.service.IProblemService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -21,6 +25,9 @@ public class ExplanationController {
 
     @Resource
     IExplanationService explanationService;
+
+    @Resource
+    IProblemService problemService;
 
     //查询题解数据（分页查询）
     @ResponseBody
@@ -34,12 +41,34 @@ public class ExplanationController {
         return Msg.success().add("pageInfo",page);
     }
 
+    //查看对应题解
     @RequiresRoles("普通用户")
     @RequestMapping("/explanation.do")
     String showExplanations(@RequestParam Integer eid, Model model){
        Explanation explanation = explanationService.selectExplanationByEid(eid);
+       explanation.setContent(StringEscapeUtils.escapeHtml(explanation.getContent()));
         model.addAttribute("explanation",explanation);
         return "explanation";
+    }
+
+    @RequiresRoles("普通用户")
+    @RequestMapping("/editExplanation")
+    String editExplanation(@RequestParam(value = "pid") Integer pid, Model model){
+        Problem problem = problemService.selectProblemByPid(pid);
+        model.addAttribute("problem",problem);
+        return "editExplanation";
+    }
+
+    @RequiresRoles("普通用户")
+    @ResponseBody
+    @RequestMapping(value = "/saveExplanation", method = RequestMethod.POST)
+    Msg saveExplanation(@RequestParam(value = "uid")Integer uid,
+                        @RequestParam(value = "pid")Integer pid,
+                        @RequestParam(value = "content")String content){
+        System.out.println(content);
+        Explanation explanation = new Explanation(uid,pid,content);
+        int eid = explanationService.saveExplanation(explanation);
+        return Msg.success().add("eid",eid);
     }
 
 }

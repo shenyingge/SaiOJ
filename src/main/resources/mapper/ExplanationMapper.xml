@@ -155,7 +155,7 @@
     values (#{eid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, 
       #{content,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="cn.sai.entity.Explanation" >
+  <insert id="insertSelective" parameterType="cn.sai.entity.Explanation" useGeneratedKeys="true" keyProperty="eid" >
     insert into t_explanation
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="eid != null" >

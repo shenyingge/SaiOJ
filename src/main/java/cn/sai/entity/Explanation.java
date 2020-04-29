@@ -12,6 +12,15 @@ public class Explanation implements Serializable {
 
     private String content;
 
+    public Explanation() {
+    }
+
+    public Explanation(Integer uid, Integer pid, String content) {
+        this.uid = uid;
+        this.pid = pid;
+        this.content = content;
+    }
+
     @Override
     public String toString() {
         return "Explanation{" +

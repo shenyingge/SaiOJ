@@ -76,7 +76,7 @@
             data:"lan="+lan+"&uid="+uid+"&pid="+pid+"&code="+code,
             method:"post",
             success:function (result) {
-                if(result.code == 100){
+                if(result.code === 100){
                     alert("等待测评,评测id为"+result.extend.sid);
                 }else{
                     alert("提交不合法");
