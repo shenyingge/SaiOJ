@@ -3,6 +3,7 @@ package cn.sai.entity;
 import java.io.Serializable;
 
 public class Problem implements Serializable {
+
     private Integer pid;
 
     private String title;
@@ -20,6 +21,18 @@ public class Problem implements Serializable {
     private Integer submitTimes;
 
     private Float acRate;
+
+    public Problem() {
+    }
+
+    public Problem(String title, String description, String input, String output, Integer timeLimit, Integer memoryLimit) {
+        this.title = title;
+        this.description = description;
+        this.input = input;
+        this.output = output;
+        this.timeLimit = timeLimit;
+        this.memoryLimit = memoryLimit;
+    }
 
     @Override
     public String toString() {

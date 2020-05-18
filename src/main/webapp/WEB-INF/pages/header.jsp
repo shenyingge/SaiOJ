@@ -10,11 +10,27 @@
 <html>
 <head>
     <title>header</title>
+    <%
+        pageContext.setAttribute("APP_PATH",request.getContextPath());
+    %>
 </head>
 <body>
 <div class="container-fluid" style="margin-top: 5px">
     <div class="col-lg-1 text-left"><a href="index"><h4>首页</h4></a></div>
-    <div class="col-lg-2 col-lg-offset-5 text-right"><h4>欢迎，<a href="user"><shiro:principal property="nickname"/></a></h4></div>
+
+    <div class="col-lg-1 text-left">
+        <shiro:hasRole name="管理员">
+        <a href="editProblem"><h4>发布题目</h4></a>
+        </shiro:hasRole>
+    </div>
+    <div class="col-lg-1 text-left">
+        <shiro:hasRole name="管理员">
+            <%if(request.getAttribute("problem") != null) {%>
+            <a href="changeProblem?pid=${problem.pid}"><h4>修改题目</h4></a>
+            <% }%>
+        </shiro:hasRole>
+    </div>
+    <div class="col-lg-2 col-lg-offset-3 text-right"><h4>欢迎，<a href="user"><shiro:principal property="nickname"/></a></h4></div>
 
     <%if(request.getAttribute("problem") != null) {%>
     <div class="col-lg-1 text-center"><a href="editExplanation?pid=${problem.pid}&pn=1"><h4>写题解</h4></a></div>

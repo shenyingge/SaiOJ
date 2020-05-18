@@ -57,7 +57,7 @@
         <div id="page_info_area" class="col-lg-4 col-lg-offset-1">
         </div>
         <!-- 分页条信息 -->
-        <div id="page_nav_area" class="col-lg-3 col-lg-offset-4">
+        <div id="page_nav_area" class="col-lg-5 col-lg-offset-2">
         </div>
     </div>
 </div>

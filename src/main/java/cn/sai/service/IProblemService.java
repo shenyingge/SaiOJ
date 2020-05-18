@@ -20,4 +20,6 @@ public interface IProblemService {
     List<Problem> selectProblemsByTagName(String name);
     //联合查询问题和题解
     List<ProblemDto> selectDtoAll();
+
+    void updateProblemByPid(Problem problem);
 }

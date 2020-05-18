@@ -30,4 +30,7 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
+    User selectByPrimaryKeyWithoutPassword(Integer uid);
+
+    void addRoleToUser(Integer uid, Integer rid);
 }

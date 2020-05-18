@@ -25,13 +25,23 @@ public class UserServiceImpl implements IUserService {
     public int saveUser(User user){
         String password = EncryptionUtils.encrypt(user);
         user.setPassword(password);
-        return userMapper.insertSelective(user);
+        int i = userMapper.insertSelective(user);
+        if(i < 0)return i;
+        System.out.println(user);
+        userMapper.addRoleToUser(user.getUid(),2);
+        return user.getUid();
     }
 
     @Override
     public User selectUserByUid(Integer uid) {
         return userMapper.selectByPrimaryKey(uid);
     }
+
+    @Override
+    public User selectUserWithoutPasswordByUid(Integer uid) {
+        return userMapper.selectByPrimaryKeyWithoutPassword(uid);
+    }
+
 
     public User selectUserByUsername(String username){
         UserExample example = new UserExample();

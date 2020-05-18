@@ -6,6 +6,7 @@
     <result column="uid" property="uid" jdbcType="INTEGER" />
     <result column="pid" property="pid" jdbcType="INTEGER" />
   </resultMap>
+
   <resultMap id="ResultMapWithBLOBs" type="cn.sai.entity.Explanation" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
@@ -14,7 +15,7 @@
     <result column="uid" property="explanation.uid" jdbcType="INTEGER" />
     <result column="pid" property="explanation.pid" jdbcType="INTEGER" />
     <result column="content" property="explanation.content" jdbcType="LONGVARCHAR" />
-    <association property="user" column="uid" select="cn.sai.mapper.UserMapper.selectByPrimaryKey"/>
+    <association property="user" column="uid" select="cn.sai.mapper.UserMapper.selectByPrimaryKeyWithoutPassword"/>
   </resultMap>
 
   <sql id="Example_Where_Clause" >
@@ -119,6 +120,9 @@
     from t_explanation
     where eid = #{eid,jdbcType=INTEGER}
   </select>
+
+
+
   <!-- 根据题目id查找题解 -->
   <select id="selectByPid" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select

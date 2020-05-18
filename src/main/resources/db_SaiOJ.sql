@@ -46,7 +46,7 @@ INSERT INTO `t_user_role` (`uid`,`rid`) VALUES ('1','1'),('1','2');
 CREATE TABLE `t_problem`(
 	`pid` INT(11) NOT NULL AUTO_INCREMENT COMMENT '题目id',
 	`title` VARCHAR(32) NOT NULL COMMENT '题目名',
-	`description` VARCHAR(500) NOT NULL COMMENT '题目描述',
+	`description` VARCHAR(5000) NOT NULL COMMENT '题目描述',
 	`input` VARCHAR(500) DEFAULT NULL COMMENT '题目标准输入',
   	`output` VARCHAR(500) DEFAULT NULL COMMENT '题目标准输出',
 	`time_limit` INT(11) NOT NULL COMMENT '题目时间限制',

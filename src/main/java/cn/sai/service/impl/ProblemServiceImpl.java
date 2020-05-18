@@ -66,4 +66,9 @@ public class ProblemServiceImpl implements IProblemService {
     public List<ProblemDto> selectDtoAll() {
         return problemMapper.selectDtoAll();
     }
+
+    @Override
+    public void updateProblemByPid(Problem problem) {
+        problemMapper.updateByPrimaryKey(problem);
+    }
 }

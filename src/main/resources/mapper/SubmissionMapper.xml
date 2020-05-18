@@ -25,7 +25,7 @@
     <result column="run_time" property="submission.runTime" jdbcType="DOUBLE" />
     <result column="is_visible" property="submission.isVisible" jdbcType="BIT" />
     <result column="code" property="submission.code" jdbcType="LONGVARCHAR" />
-    <association property="user" column="uid" select="cn.sai.mapper.UserMapper.selectByPrimaryKey"/>
+    <association property="user" column="uid" select="cn.sai.mapper.UserMapper.selectByPrimaryKeyWithoutPassword"/>
     <association property="problem" column="pid" select="cn.sai.mapper.ProblemMapper.selectByPrimaryKey"/>
   </resultMap>
 
@@ -96,7 +96,7 @@
 
   <!-- 查找全部submission带用户 -->
   <select id="selectAllWithUser" resultMap="ResultMapWithUser">
-    select * from t_submission
+    select * from t_submission order by date_time desc
   </select>
   <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="cn.sai.entity.SubmissionExample" >
     select

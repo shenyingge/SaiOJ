@@ -11,6 +11,17 @@
     <result column="rank" property="rank" jdbcType="INTEGER" />
     <result column="u1" property="u1" jdbcType="VARCHAR" />
   </resultMap>
+
+  <resultMap id="BaseResultMapWithoutPassword" type="cn.sai.entity.User" >
+    <id column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="problem_ac_num" property="problemAcNum" jdbcType="INTEGER" />
+    <result column="ac_rate" property="acRate" jdbcType="REAL" />
+    <result column="rank" property="rank" jdbcType="INTEGER" />
+    <result column="u1" property="u1" jdbcType="VARCHAR" />
+  </resultMap>
+
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -72,6 +83,11 @@
   <sql id="Base_Column_List" >
     uid, username, password, nickname, problem_ac_num, ac_rate, rank, u1
   </sql>
+
+  <sql id="Base_Column_Without_Password_List">
+    uid, username, nickname, problem_ac_num, ac_rate, rank, u1
+  </sql>
+
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.sai.entity.UserExample" >
     select
     <if test="distinct" >
@@ -92,6 +108,12 @@
     from t_user
     where uid = #{uid,jdbcType=INTEGER}
   </select>
+  <select id="selectByPrimaryKeyWithoutPassword" resultMap="BaseResultMapWithoutPassword" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_Without_Password_List"/>
+      from t_user
+      where uid = #{uid,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_user
     where uid = #{uid,jdbcType=INTEGER}
@@ -102,7 +124,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cn.sai.entity.User" >
+  <insert id="insert" parameterType="cn.sai.entity.User" useGeneratedKeys="true" keyProperty="uid">
     insert into t_user (uid, username, password, 
       nickname, problem_ac_num, ac_rate, 
       rank, u1)
@@ -110,7 +132,7 @@
       #{nickname,jdbcType=VARCHAR}, #{problemAcNum,jdbcType=INTEGER}, #{acRate,jdbcType=REAL}, 
       #{rank,jdbcType=INTEGER}, #{u1,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="cn.sai.entity.User" >
+  <insert id="insertSelective" parameterType="cn.sai.entity.User" useGeneratedKeys="true" keyProperty="uid">
     insert into t_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="uid != null" >
@@ -255,4 +277,8 @@
       u1 = #{u1,jdbcType=VARCHAR}
     where uid = #{uid,jdbcType=INTEGER}
   </update>
+
+  <insert id="addRoleToUser">
+    insert into t_user_role (uid,rid) values (#{param1,jdbcType=INTEGER},2)
+  </insert>
 </mapper>

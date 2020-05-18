@@ -14,7 +14,7 @@
         request.setCharacterEncoding("UTF-8");
         session.setAttribute("problem",request.getAttribute("problem"));
         String s = session.getAttribute("problem").toString();
-        System.out.println(s);
+        //System.out.println(s);
     %>
 
     <title>problem</title>
@@ -27,7 +27,6 @@
     <script src="http://cdn.bootcss.com/ace/1.2.4/ext-old_ie.js"></script>
 
 </head>
-
 <body>
 <jsp:include page="header.jsp"/>
 <div id="uid" class="hidden"><shiro:principal property="uid"/></div>
@@ -38,9 +37,11 @@
             <p>时间限制：${problem.timeLimit}ms</p>
             <p>内存限制：${problem.memoryLimit}MB</p>
         </div>
-        <p style="font-size: large; line-height:inherit">
+        <div>
+        <p style="font-size: large; line-height:inherit;">
            ${problem.description}
         </p>
+        </div>
     </div>
     <div class="col-lg-8 " style=" margin-top: 10px">
         <!--代码输入框（注意请务必设置高度，否则无法显示）-->
@@ -48,7 +49,8 @@
         <div class="container-fluid">
             <div class="col-lg-1">
                 <select id="language_select" class="btn btn-default dropdown-toggle">
-                    <option class="btn btn-default" value="c_cpp">c_cpp</option>
+                    <option class="btn btn-default" value="c_cpp">c</option>
+                    <option class="btn btn-default" value="c_cpp">c++</option>
                     <option class="btn btn-default" value="java">java</option>
                     <option class="btn btn-default" value="javascript">javascript</option>
                     <option class="btn btn-default" value="go">go</option>

@@ -11,6 +11,8 @@ public interface IUserService {
 
     User selectUserByUid(Integer uid);
 
+    User selectUserWithoutPasswordByUid(Integer uid);
+
     User selectUserByUsername(String username);
 
     User selectUserByNickname(String nickname);

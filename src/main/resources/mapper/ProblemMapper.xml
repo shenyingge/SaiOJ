@@ -133,7 +133,7 @@
       #{memoryLimit,jdbcType=INTEGER}, #{submitTimes,jdbcType=INTEGER}, #{acRate,jdbcType=REAL}
       )
   </insert>
-  <insert id="insertSelective" parameterType="cn.sai.entity.Problem" >
+  <insert id="insertSelective" parameterType="cn.sai.entity.Problem" useGeneratedKeys="true" keyProperty="pid">
     insert into t_problem
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="pid != null" >
