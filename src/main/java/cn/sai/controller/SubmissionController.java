@@ -27,12 +27,25 @@ public class SubmissionController {
     //查询提交数据（分页查询）
     @ResponseBody
     @RequestMapping("/submissions.do")
-    Msg getExplanations(@RequestParam(value = "pn",defaultValue = "1")Integer pn, Model model){
+    Msg getSubmissions(@RequestParam(value = "pn",defaultValue = "1")Integer pn, Model model){
         PageHelper.startPage(pn,10);
         List<SubmissionDto> submissionDtos = submissionService.selectAllWithUser();
         PageInfo page = new PageInfo(submissionDtos,5);  //navigatePages：显示的页数
         return Msg.success().add("pageInfo",page);
     }
+
+    //查询当前用户的提交数据（分页查询）
+    @ResponseBody
+    @RequestMapping("/mySubmissions.do")
+    Msg getMySubmissions(@RequestParam(value = "uid")Integer uid,
+                         @RequestParam(value = "pn",defaultValue = "1")Integer pn,
+                         Model model){
+        PageHelper.startPage(pn,10);
+        List<SubmissionDto> submissionDtos = submissionService.selectByUid(uid);
+        PageInfo page = new PageInfo(submissionDtos,5);  //navigatePages：显示的页数
+        return Msg.success().add("pageInfo",page);
+    }
+
 
     @ResponseBody
     @RequiresRoles("普通用户")

@@ -18,6 +18,14 @@
     <association property="user" column="uid" select="cn.sai.mapper.UserMapper.selectByPrimaryKeyWithoutPassword"/>
   </resultMap>
 
+  <resultMap id="ResultMapWithProblem" type="cn.sai.entity.ExplanationDtoWithProblem">
+    <id column="eid" property="explanation.eid" jdbcType="INTEGER" />
+    <result column="uid" property="explanation.uid" jdbcType="INTEGER" />
+    <result column="pid" property="explanation.pid" jdbcType="INTEGER" />
+    <result column="content" property="explanation.content" jdbcType="LONGVARCHAR" />
+    <association property="problem" column="pid" select="cn.sai.mapper.ProblemMapper.selectByPrimaryKey"/>
+  </resultMap>
+
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -142,6 +150,15 @@
     where pid = #{pid,jdbcType=INTEGER}
   </select>
 
+  <!-- 通过用户id查找题解以及题目 -->
+  <select id="selectExplanationDtosByUid" resultMap="ResultMapWithProblem" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_explanation
+    where uid = #{uid,jdbcType=INTEGER}
+  </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_explanation

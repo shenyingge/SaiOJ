@@ -2,9 +2,9 @@ package cn.sai.service.impl;
 
 import cn.sai.entity.Explanation;
 import cn.sai.entity.ExplanationDto;
+import cn.sai.entity.ExplanationDtoWithProblem;
 import cn.sai.mapper.ExplanationMapper;
 import cn.sai.service.IExplanationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -35,6 +35,11 @@ public class ExplanationServiceImpl implements IExplanationService {
     public Integer saveExplanation(Explanation explanation) {
         explanationMapper.insertSelective(explanation);
         return explanation.getEid();
+    }
+
+    @Override
+    public List<ExplanationDtoWithProblem> selectExplanationDtosByUid(Integer uid) {
+        return explanationMapper.selectExplanationDtosByUid(uid);
     }
 
 }

@@ -47,4 +47,11 @@ public class SubmissionTest {
         System.out.println(submissionDto);
     }
 
+    @Test
+    public void selectByUidTest(){
+        List<SubmissionDto> submissionDtos = submissionService.selectByUid(1);
+        for (SubmissionDto s : submissionDtos) {
+            System.out.println(s);
+        }
+    }
 }

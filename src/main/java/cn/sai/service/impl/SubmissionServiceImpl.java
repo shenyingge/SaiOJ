@@ -26,6 +26,11 @@ public class SubmissionServiceImpl implements ISubmissionService {
     }
 
     @Override
+    public List<SubmissionDto> selectByUid(Integer uid) {
+        return submissionMapper.selectByUid(uid);
+    }
+
+    @Override
     public SubmissionDto selectDtoBySid(Integer sid) {
         return submissionMapper.selectDtoBySid(sid);
     }

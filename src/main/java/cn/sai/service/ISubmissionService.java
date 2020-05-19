@@ -10,5 +10,7 @@ public interface ISubmissionService {
 
     List<SubmissionDto> selectAllWithUser();
 
+    List<SubmissionDto> selectByUid(Integer uid);
+
     SubmissionDto selectDtoBySid(Integer sid);
 }

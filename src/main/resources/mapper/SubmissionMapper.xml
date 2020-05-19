@@ -29,6 +29,19 @@
     <association property="problem" column="pid" select="cn.sai.mapper.ProblemMapper.selectByPrimaryKey"/>
   </resultMap>
 
+  <resultMap id="ResultMapWithProblem" type="cn.sai.entity.SubmissionDto">
+    <id column="sid" property="submission.sid" jdbcType="INTEGER" />
+    <result column="lan" property="submission.lan" jdbcType="VARCHAR" />
+    <result column="date_time" property="submission.dateTime" jdbcType="TIMESTAMP" />
+    <result column="uid" property="submission.uid" jdbcType="INTEGER" />
+    <result column="pid" property="submission.pid" jdbcType="INTEGER" />
+    <result column="status" property="submission.status" jdbcType="INTEGER" />
+    <result column="run_time" property="submission.runTime" jdbcType="DOUBLE" />
+    <result column="is_visible" property="submission.isVisible" jdbcType="BIT" />
+    <result column="code" property="submission.code" jdbcType="LONGVARCHAR" />
+    <association property="problem" column="pid" select="cn.sai.mapper.ProblemMapper.selectByPrimaryKey"/>
+  </resultMap>
+
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -96,7 +109,12 @@
 
   <!-- 查找全部submission带用户 -->
   <select id="selectAllWithUser" resultMap="ResultMapWithUser">
-    select * from t_submission order by date_time desc
+    select * from t_submission order by sid desc
+  </select>
+
+  <!-- 查找当前用户全部submission -->
+  <select id="selectByUid" parameterType="java.lang.Integer" resultMap="ResultMapWithProblem">
+    select * from t_submission where uid = #{uid,jdbcType=INTEGER} order by sid desc
   </select>
   <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="cn.sai.entity.SubmissionExample" >
     select

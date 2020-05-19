@@ -2,6 +2,7 @@ package cn.sai.mapper;
 
 import cn.sai.entity.Explanation;
 import cn.sai.entity.ExplanationDto;
+import cn.sai.entity.ExplanationDtoWithProblem;
 import cn.sai.entity.ExplanationExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
@@ -38,4 +39,6 @@ public interface ExplanationMapper {
     int updateByPrimaryKey(Explanation record);
 
     List<ExplanationDto> selectExplanationDtosByPid(Integer pid);
+
+    List<ExplanationDtoWithProblem> selectExplanationDtosByUid(Integer uid);
 }

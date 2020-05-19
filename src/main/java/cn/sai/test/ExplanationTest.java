@@ -2,6 +2,7 @@ package cn.sai.test;
 
 import cn.sai.entity.Explanation;
 import cn.sai.entity.ExplanationDto;
+import cn.sai.entity.ExplanationDtoWithProblem;
 import cn.sai.service.IExplanationService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,5 +31,13 @@ public class ExplanationTest {
     public void saveExplanationTest(){
         int n = explanationService.saveExplanation(new Explanation(1,1,"code"));
         System.out.println(n);
+    }
+
+    @Test
+    public void selectExplanationDtosByUidTest(){
+        List<ExplanationDtoWithProblem> explanationDtoWithProblems = explanationService.selectExplanationDtosByUid(1);
+        for (ExplanationDtoWithProblem e: explanationDtoWithProblems) {
+            System.out.println(e);
+        }
     }
 }

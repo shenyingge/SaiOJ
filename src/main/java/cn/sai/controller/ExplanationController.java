@@ -1,9 +1,6 @@
 package cn.sai.controller;
 
-import cn.sai.entity.Explanation;
-import cn.sai.entity.ExplanationDto;
-import cn.sai.entity.Msg;
-import cn.sai.entity.Problem;
+import cn.sai.entity.*;
 import cn.sai.service.IExplanationService;
 import cn.sai.service.IProblemService;
 import com.github.pagehelper.PageHelper;
@@ -37,6 +34,18 @@ public class ExplanationController {
                         Model model){
         PageHelper.startPage(pn,10);
         List<ExplanationDto> explanationDtos = explanationService.selectExplanationDtosByPid(pid);
+        PageInfo page = new PageInfo(explanationDtos,5);  //navigatePages：显示的页数
+        return Msg.success().add("pageInfo",page);
+    }
+
+    //查询我的题解数据（分页查询）
+    @ResponseBody
+    @RequestMapping("/explanations.do")
+    Msg getMyExplanations(@RequestParam(value = "uid")Integer uid,
+                          @RequestParam(value = "pn",defaultValue = "1")Integer pn,
+                        Model model){
+        PageHelper.startPage(pn,10);
+        List<ExplanationDtoWithProblem> explanationDtos = explanationService.selectExplanationDtosByUid(uid);
         PageInfo page = new PageInfo(explanationDtos,5);  //navigatePages：显示的页数
         return Msg.success().add("pageInfo",page);
     }

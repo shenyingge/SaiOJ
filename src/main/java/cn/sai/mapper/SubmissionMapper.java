@@ -38,4 +38,6 @@ public interface SubmissionMapper {
     List<SubmissionDto> selectAllWithUser();
 
     SubmissionDto selectDtoBySid(Integer sid);
+
+    List<SubmissionDto> selectByUid(Integer uid);
 }
