@@ -28,13 +28,19 @@
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="exceptionMappings">
             <props> <!-- 这里你可以根据需要定义N多个错误异常转发 -->
-                <prop key="org.apache.shiro.authz.UnauthorizedException">redirect:/failed</prop>
+                <prop key="org.apache.shiro.authz.UnauthorizedException">redirect:/unauthorized.jsp</prop>
                 <prop key="org.apache.shiro.authz.UnauthenticatedException">redirect:/login.jsp</prop>
                 <!--<prop key="java.lang.IllegalArgumentException">redirect:/error.jsp</prop>
                     参数错误(bizError.jsp) -->
                 <!--<prop key="java.lang.Exception">redirect:/error.jsp</prop> 其他错误为'未定义错误'(unknowError.jsp) -->
             </props>
         </property>
+    </bean>
+
+    <!-- springmvc提供的简单异常处理器 -->
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <!-- 定义默认的异常处理页面 -->
+        <property name="defaultErrorView" value="/WEB-INF/jsp/404.jsp"/>
     </bean>
 
 

@@ -40,7 +40,7 @@ public class SubmissionController {
     Msg getMySubmissions(@RequestParam(value = "uid")Integer uid,
                          @RequestParam(value = "pn",defaultValue = "1")Integer pn,
                          Model model){
-        PageHelper.startPage(pn,10);
+        PageHelper.startPage(pn,8);
         List<SubmissionDto> submissionDtos = submissionService.selectByUid(uid);
         PageInfo page = new PageInfo(submissionDtos,5);  //navigatePages：显示的页数
         return Msg.success().add("pageInfo",page);

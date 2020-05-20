@@ -40,7 +40,7 @@ public class ExplanationController {
 
     //查询我的题解数据（分页查询）
     @ResponseBody
-    @RequestMapping("/explanations.do")
+    @RequestMapping("/myExplanations.do")
     Msg getMyExplanations(@RequestParam(value = "uid")Integer uid,
                           @RequestParam(value = "pn",defaultValue = "1")Integer pn,
                         Model model){
